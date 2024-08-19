@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_architecture_bloc/core/routes/app_route.dart';
-import 'package:flutter_clean_architecture_bloc/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter_clean_architecture_bloc/observer.dart';
 
 import 'injection.dart';
