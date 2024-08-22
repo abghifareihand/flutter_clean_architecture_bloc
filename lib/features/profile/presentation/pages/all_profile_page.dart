@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_clean_architecture_bloc/injection.dart';
 import 'package:go_router/go_router.dart';
 
 import '../bloc/profile_bloc.dart';
 
-class AllUserPage extends StatelessWidget {
-  const AllUserPage({super.key});
+class AllProfilePage extends StatelessWidget {
+  const AllProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +14,7 @@ class AllUserPage extends StatelessWidget {
         title: const Text('All User Page'),
       ),
       body: BlocBuilder<ProfileBloc, ProfileState>(
-        bloc: getIt<ProfileBloc>()..add(ProfileGetAllUser(2)),
+        bloc: context.read<ProfileBloc>()..add(ProfileGetAllUser(2)),
         builder: (context, state) {
           if (state is ProfileLoading) {
             return const Center(

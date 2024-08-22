@@ -13,22 +13,25 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final GetUser getUser;
 
   ProfileBloc({required this.getAllUser, required this.getUser}) : super(ProfileInitial()) {
-    on<ProfileGetAllUser>((event, emit) async {
-      emit(ProfileLoading());
-      final result = await getAllUser.execute(event.page);
-      result.fold(
-        (error) => emit(ProfileError(error.message)),
-        (data) => emit(ProfileLoadedAllUser(data)),
-      );
-    });
+    on<ProfileGetAllUser>(_onProfileGetAll);
+    on<ProfileGetDetailUser>(_onProfileGetDetail);
+  }
 
-    on<ProfileGetDetailUser>((event, emit) async {
-      emit(ProfileLoading());
-      final result = await getUser.execute(event.userId);
-      result.fold(
-        (error) => emit(ProfileError(error.message)),
-        (data) => emit(ProfileLoadedUser(data)),
-      );
-    });
+  Future<void> _onProfileGetAll(ProfileGetAllUser event, Emitter<ProfileState> emit) async {
+    emit(ProfileLoading());
+    final result = await getAllUser.execute(event.page);
+    result.fold(
+      (error) => emit(ProfileError(error.message)),
+      (data) => emit(ProfileLoadedAllUser(data)),
+    );
+  }
+
+  Future<void> _onProfileGetDetail(ProfileGetDetailUser event, Emitter<ProfileState> emit) async {
+    emit(ProfileLoading());
+    final result = await getUser.execute(event.userId);
+    result.fold(
+      (error) => emit(ProfileError(error.message)),
+      (data) => emit(ProfileLoadedUser(data)),
+    );
   }
 }
