@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_architecture_bloc/core/routes/app_route.dart';
-import 'package:flutter_clean_architecture_bloc/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter_clean_architecture_bloc/observer.dart';
 
 import 'features/user/presentation/bloc/user_add/user_add_bloc.dart';
@@ -14,7 +13,7 @@ import 'injection.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await init();
-  Bloc.observer = MyObserver();
+  // Bloc.observer = MyObserver();
   runApp(const MyApp());
 }
 
@@ -40,15 +39,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => getIt<UserDeleteBloc>(),
         ),
-
-        // PROFILE
-        BlocProvider(
-          create: (context) => getIt<ProfileBloc>(),
-        ),
       ],
       child: MaterialApp.router(
         theme: ThemeData(
-          useMaterial3: false,
+          useMaterial3: true,
         ),
         routerConfig: AppRouter.router,
       ),

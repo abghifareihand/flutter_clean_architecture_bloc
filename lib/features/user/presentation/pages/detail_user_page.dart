@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_architecture_bloc/features/user/presentation/bloc/user_edit/user_edit_bloc.dart';
 import 'package:flutter_clean_architecture_bloc/features/user/presentation/bloc/user_get/user_get_bloc.dart';
+import 'package:flutter_clean_architecture_bloc/injection.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../domain/entities/user.dart';
@@ -17,58 +18,50 @@ class DetailUserPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Detail User'),
       ),
-      body: BlocListener<UserEditBloc, UserEditState>(
-        listener: (context, state) {
-          if (state is UserEditLoaded) {
-            context.read<UserDetailBloc>().add(GetUserDetailEvent(userId));
-            context.read<UserGetBloc>().add(GetUserListEvent());
+      body: BlocBuilder<UserDetailBloc, UserDetailState>(
+        bloc: context.read<UserDetailBloc>()..add(GetUserDetailEvent(userId)),
+        builder: (context, state) {
+          if (state is UserDetailLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is UserDetailError) {
+            return Center(
+              child: Text(state.message),
+            );
+          } else if (state is UserDetailLoaded) {
+            final user = state.user;
+            return Card(
+              margin: const EdgeInsets.all(20),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text('Name : ${user.name}'),
+                    Text('Email : ${user.email}'),
+                    Text('Address : ${user.address}'),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Tampilkan dialog untuk mengedit user
+                        showEditUserDialog(context, user);
+                      },
+                      child: const Text('Edit'),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return const Center(
+              child: Text('EMPTY USER'),
+            );
           }
         },
-        child: BlocBuilder<UserDetailBloc, UserDetailState>(
-          bloc: context.read<UserDetailBloc>()..add(GetUserDetailEvent(userId)),
-          builder: (context, state) {
-            if (state is UserDetailLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state is UserDetailError) {
-              return Center(
-                child: Text(state.message),
-              );
-            } else if (state is UserDetailLoaded) {
-              final user = state.user;
-              return Card(
-                margin: const EdgeInsets.all(20),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text('Name : ${user.name}'),
-                      Text('Email : ${user.email}'),
-                      Text('Address : ${user.address}'),
-                      const SizedBox(
-                        height: 20.0,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          // Tampilkan dialog untuk mengedit user
-                          showEditUserDialog(context, user);
-                        },
-                        child: const Text('Edit'),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            } else {
-              return const Center(
-                child: Text('EMPTY USER'),
-              );
-            }
-          },
-        ),
       ),
     );
   }
@@ -107,18 +100,25 @@ class DetailUserPage extends StatelessWidget {
               },
               child: const Text('Cancel'),
             ),
-            TextButton(
-              onPressed: () {
-                context.read<UserEditBloc>().add(EditUserEvent(
-                      user.id,
-                      nameController.text,
-                      emailController.text,
-                      addressController.text,
-                    ));
-
-                context.pop();
+            BlocListener<UserEditBloc, UserEditState>(
+              listener: (context, state) {
+                if (state is UserEditLoaded) {
+                  context.read<UserDetailBloc>().add(GetUserDetailEvent(userId));
+                  context.read<UserGetBloc>().add(GetUserListEvent());
+                  context.pop();
+                }
               },
-              child: const Text('Save'),
+              child: TextButton(
+                onPressed: () {
+                  context.read<UserEditBloc>().add(EditUserEvent(
+                        user.id,
+                        nameController.text,
+                        emailController.text,
+                        addressController.text,
+                      ));
+                },
+                child: const Text('Save'),
+              ),
             ),
           ],
         );

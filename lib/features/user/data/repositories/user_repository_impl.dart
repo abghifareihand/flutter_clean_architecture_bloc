@@ -24,12 +24,12 @@ class UserRepositoryImpl implements UserRepository {
     // try {
     //   bool isConnected = await networkInfo.isConnected();
     //   if (isConnected) {
-    //     log('INTERNET TERHUBUNG');
+    //     log('INTERNET CONNECTED');
     // List<UserModel> response = await userRemoteDatasource.getUserList();
     // await userLocalDatasource.saveUserList(response);
     // return Right(response);
     //   } else {
-    //     log('INTERNET TIDAK TERHUBUNG');
+    //     log('INTERNET DISCONNECTED');
     //     List<UserModel> response = await userLocalDatasource.getUserList();
     //     return Right(response);
     //   }
