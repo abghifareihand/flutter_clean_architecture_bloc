@@ -4,10 +4,10 @@
 
 This application shows more of its architecture
 
-## Demo
+## Demo App
 https://github.com/user-attachments/assets/a5f38b95-63ef-43a4-84d2-ef545f2962f6
 
-### Apps Feature:
+### Features:
 
 - Data with Mock API
 - Get All User
