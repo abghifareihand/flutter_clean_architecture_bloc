@@ -1,16 +1,21 @@
-# flutter_clean_architecture_bloc
+# Flutter Bloc Clean Architecture with MockAPI (Simple App)
 
-A new Flutter project.
+[![Fork](https://img.shields.io/github/forks/abghifareihand/flutter_clean_architecture_bloc?style=social)](https://github.com/abghifareihand/flutter_clean_architecture_bloc/fork)&nbsp; [![Star](https://img.shields.io/github/stars/abghifareihand/flutter_clean_architecture_bloc?style=social)](https://github.com/abghifareihand/flutter_clean_architecture_blocp/star)&nbsp; [![Watches](https://img.shields.io/github/watchers/abghifareihand/flutter_clean_architecture_bloc?style=social)](https://github.com/abghifareihand/flutter_clean_architecture_bloc/)&nbsp;
 
-## Getting Started
+This application shows more of its architecture
 
-This project is a starting point for a Flutter application.
+### Apps Feature:
 
-A few resources to get you started if this is your first Flutter project:
+- Data with Mock API
+- Get All User
+- Detail User
+- Create User
+- Edit User
+- Delete User
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Tech Stack:
+- Flutter Bloc
+- Http
+- Dartz
+- Go Router
+- Get it
